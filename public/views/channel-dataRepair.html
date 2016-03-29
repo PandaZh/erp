@@ -1,0 +1,149 @@
+﻿<div class="row" ng-controller="channelDataRepairController">
+    <div class="col-sm-12 col-md-12">
+        <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+    </div>
+    <div class="col-sm-12 col-md-12">
+        <div class="row">
+            <div class="col-md-2">
+                <p class="input-group">
+                    <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="formData.dt" is-open="opened"
+
+                           date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i
+                                                class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Chose app: </label>
+                    <div class="col-sm-6">
+                        <ui-select ng-model="app.selected" theme="bootstrap">
+                            <ui-select-match placeholder="Select">
+                                {{$select.selected.name}}&nbsp;&nbsp;
+                                <i ng-class="{true:'fa fa-apple',false:'fa fa-android'}[$select.selected.os == 1]"></i>
+                            </ui-select-match>
+                            <ui-select-choices repeat="item in AppAsync | filter: $select.search">
+                                <span>{{item.name}}&nbsp;&nbsp;<i ng-class="{true:'fa fa-apple',false:'fa fa-android'}[item.os == 1]"></i></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-12 col-md-12">
+        <p>方式1：手动录入</p>
+        <div class="row">
+
+            <div class="col-md-2">
+                <div class="form-group" ng-class="{true:'has-error'}[mediaSourceValidateFail]">
+                    <div class=" input-group">
+                        <span class="input-group-addon">渠道</span>
+                        <input type="text" class="form-control" placeholder="必填" ng-model="formData.mediaSource" >
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group" ng-class="{true:'has-warning'}[installsValidateFail]">
+                    <div class=" input-group">
+                        <span class="input-group-addon">激活</span>
+                        <input type="number" class="form-control" placeholder="选填,默认0" ng-model="formData.installs" >
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group" ng-class="{true:'has-warning'}[regsValidateFail]">
+                    <div class=" input-group">
+                        <span class="input-group-addon">注册</span>
+                        <input type="number" class="form-control" placeholder="选填,默认0" ng-model="formData.regs" >
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group" ng-class="{true:'has-warning'}[costValidateFail]">
+                    <div class=" input-group">
+                        <span class="input-group-addon">花费</span>
+                        <input type="number" class="form-control" placeholder="选填,默认0" ng-model="formData.cost" d>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-default pull-left" href="javascript:void(0);" ng-click="addData()"><i class="fa fa-plus"></i>添加</a>
+                <label class="checkbox pull-left m-l-20">
+                    <input type="checkbox" ng-model="formData.addType" class="ng-pristine ng-untouched ng-valid">
+                    <span class="text">抵消自然量</span>
+                </label>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-12 col-md-12">
+        <p>方式2：上传文件(.csv)  <a href="http://119.147.247.34:8081/doc/Datatables.csv">模版下载</a></p>
+        <div class="row">
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div class=" input-group">
+                        <a class="btn btn-default" href="javascript:void(0);"  ngf-select ng-model="file"   ngf-accept="'.csv'" ><i class="fa fa-plus"></i>上传文件</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2" ng-if="showProgressBar">
+                <div class="progress ng-isolate-scope" type="info" value="80">
+                    <progressbar type="info" ng-model="progressPercent" value="progressPercent">已上传{{progressPercent}}%</progressbar>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12  col-md-12">
+        <div class="well with-header with-footer">
+            <div class="header bordered-sky">
+                表格
+            </div>
+            <div class="scrollable" style="max-height: 500px;overflow-y:auto">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>游戏</th>
+                        <th>系统</th>
+                        <th>MediaSoure</th>
+                        <th>激活</th>
+                        <th>注册</th>
+                        <th>创角</th>
+                        <th>花费</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in tableData">
+                        <td>{{item.countDate}}</td>
+                        <td>{{item.gameName}}</td>
+                        <td>{{item.os == 1 ? 'IOS' : 'Android'}}</td>
+                        <td>{{item.mediaSource == item.linkMediaSource ? item.mediaSource + ' 抵消自然量' : item.mediaSource}}</td>
+                        <td>{{item.installs | number}}</td>
+                        <td>{{item.regs | number}}</td>
+                        <td>{{item.roles | number}}</td>
+                        <td>{{item.cost | currency}}</td>
+                        <td><a ng-click="delete(item)"><i class="fa fa-trash"></i></a></td>
+                    </tr>
+                    <tr ng-if="noData">
+                        <td class="danger"  colspan="9">无补充录入数据</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="footer">
+                <code>无</code>
+            </div>
+        </div>
+    </div>
+</div>
+<!--TODO lazyload 会报错-->
+<script src="lib/modules/angular-daterangepicker/moment.js"></script>
+<script src="lib/modules/angular-daterangepicker/daterangepicker.js"></script>
+<script src="lib/modules/angular-daterangepicker/angular-daterangepicker.js"></script>

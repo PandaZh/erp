@@ -1,0 +1,26 @@
+<div class="container" ng-controller="countryListController">
+    <div class="block-header">
+        <h2>国家配置</h2>
+    </div>
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+    <div class="card" style="float: left">
+        <div class="card-header">
+            <h2>请选择国家<small>渠道配置中，固定国家单价列表.</small></h2>
+            <button class="btn bgm-teal waves-effect" style="float: right" ng-click="save()">保存</button>
+        </div>
+        <div class="card-body card-padding">
+            <div class="checkbox-group col-md-12" ng-model="countrys">
+                <div class="checkbox m-b-15 col-md-3" ng-model="country" ng-repeat="country in countrys" >
+                    <label>
+                        <input type="checkbox" ng-checked="country.status" ng-model="country.status">
+                        <i class="input-helper"></i>
+                        {{country.name}}({{country.code}})
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

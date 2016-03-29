@@ -1,0 +1,33 @@
+<div class="container" ng-controller="mainPageController">
+    <div class="block-header">
+        <h2>主页</h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <!--<h2>渠道配置<small>请仔细核对录入数据！以免造成数据计算错误.</small></h2>-->
+        </div>
+        <div class="card-body card-padding">
+           <h2>我是Main Page</h2>
+            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+            <button class='btn btn-default' ng-click="addAlert()">Add Alert</button>
+
+            <h4>Popup</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <input ng-click="open($event)" type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="dt"
+                           is-open="opened"  max-date="'2016-06-22'" ng-required="true" close-text="Close" />
+                </div>
+            </div>
+
+        </div>
+        <div class="card-body card-padding">
+            <input ng-model="highchartsNG.title.text">
+            <button ng-click="addSeries()">Add Series</button>
+            <button ng-click="addPoints()">Add Points to Random Series</button>
+            <button ng-click="removeRandomSeries()">Remove Random Series</button>
+            <button ng-click="swapChartType()">Line/Bar</button>
+            <highchart id="chart1" config="highchartsNG"></highchart>
+        </div>
+    </div>
+
+</div>

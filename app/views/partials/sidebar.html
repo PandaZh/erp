@@ -1,0 +1,27 @@
+<div class="sidebar-inner">
+    <div class="si-inner">
+        <div class="profile-menu">
+            <a href="">
+                <div class="profile-pic">
+                    <img src="img/profile-pics/2.jpg" alt="">
+                </div>
+
+                <div class="profile-info">
+                    下午好，xiaoyi
+                </div>
+            </a>
+        </div>
+        <ul class="main-menu" ng-controller="sidebarController">
+            <li ng-repeat="menu in menus" ng-class="{true:'sub-menu'}[menu.children.length > 0]">
+                <a data-ui-sref="app.page({ page: '{{menu.menu_url}}', child: null })" ng-if="menu.children.length ==0"><i class="{{menu.menu_icon}}"></i>{{menu.menu_name}}</a>
+                <a ng-if="menu.children.length >0"><i class="{{menu.menu_icon}}"></i>{{menu.menu_name}}</a>
+                <ul ng-if="menu.children.length >0">
+                    <li ng-repeat="child in menu.children track by $index">
+                        <a data-ui-sref="app.page({ page: '{{menu.menu_url}}', child: '{{child.menu_url}}' })"><i class="{{child.menu_icon}}"></i> {{child.menu_name}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+</div>

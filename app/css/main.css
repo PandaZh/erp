@@ -1,0 +1,692 @@
+/**
+ * Created by xiaoyi on 2015/4/10.
+ */
+
+*, :active, :hover {
+    outline: 0!important;
+    -webkit-tap-highlight-color: rgba(0,0,0,0)!important;
+}
+:before, :after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body {
+    font-family: '微软雅黑';
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #5e5e5e;
+    background-color: #edecec;
+    font-weight: 400;
+    padding-top: 65px;
+}
+
+/*设置模态框最大高度*/
+.modal-content .modal-body{
+    max-height: 500px;
+    overflow: scroll;
+}
+/**登录相关**/
+.login-content {
+    overflow: hidden;
+    height: 100%;
+}
+.login-content .login-selection {
+    background: #fff;
+    box-shadow: 0 1px 11px rgba(0, 0, 0, .27);
+    border-radius: 2px;
+    padding: 35px 55px;
+    width: 500px;
+    height: 245px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-top: -60px;
+    position: relative
+}
+@media (max-width: 767px) {
+    .login-content .login-selection {
+        padding: 15px 35px 25px 20px;
+        width: calc(100% - 60px)
+    }
+}
+.login-content .login-selection .checkbox {
+    margin: 5px 0 0 42px;
+    text-align: left
+}
+.login-content .login-selection .btn-login {
+    top: 50%;
+    margin-top: -25px;
+    right: -25px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28)
+}
+
+body.login-content {
+    text-align: center
+}
+body.login-content:after {
+    height: 100%;
+    width: 1px;
+
+    content: "";
+    vertical-align: middle;
+    display: inline-block;
+
+}
+body.login-content:before {
+    height: 50%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #00bcd4;
+    content: "";
+    z-index: 0
+}
+.input-group-addon, .input-group-btn, .input-group .form-control {
+    display: table-cell;
+}
+
+.input-group .form-control {
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+
+}
+.form-control {
+    box-shadow: none;
+    border: 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+.form-control:active,
+.form-control:focus {
+    border-bottom-color: #b4b4b4
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.input-group-addon {
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 2px;
+}
+.input-group-addon i{
+    font-size: 18px;
+}
+
+.input-group-addon, .input-group-btn {
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/*START 登录input bottom border*/
+.fg-line:not([class*=has-]):after {
+    background: #2196f3;
+}
+.fg-line .form-control:disabled {
+    color: #9d9d9d;
+    background: 0 0
+}
+.fg-line:not(.disabled):after,
+.fg-line:not(.readonly):after {
+    position: absolute;
+    z-index: 3;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0;
+    content: "";
+    -webkit-transition: all;
+    -moz-transition: all;
+    -o-transition: all;
+    transition: all;
+    -webkit-transition-duration: 300ms;
+    transition-duration: 300ms
+}
+
+.input-group .title{
+    width: 80px;
+}
+.input-group .fg-line:after {
+    left: 35px;
+    text-align: left;
+}
+.input-group .fg-line.fg-toggled:after {
+    width: calc(100% - 36px);
+}
+
+
+
+
+/*START 记住密码 + 登录按钮*/
+.radio label, .checkbox label {
+    min-height: 18px;
+    padding-left: 20px;
+    margin-bottom: 0;
+    font-weight: 400;
+    cursor: pointer;
+}
+.checkbox label, .radio label {
+    padding-left: 30px;
+    position: relative;
+}
+/*记住密码checkbox*/
+.checkbox input {
+    width: 17px;
+    height: 17px
+}
+/* checked的时候，隐藏i元素 即灰色方框*/
+.checkbox input:checked+.input-helper:before {
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0)
+}
+/* checked的时候，旋转只有左、下边框的长方形，即对勾*/
+.checkbox input:checked+.input-helper:after {
+    -webkit-transform: scale(1) rotate(-50deg);
+    -ms-transform: scale(1) rotate(-50deg);
+    -o-transform: scale(1) rotate(-50deg);
+    transform: scale(1) rotate(-50deg);
+    opacity: 1;
+    filter: alpha(opacity=100)
+}
+.checkbox input, .radio input {
+     top: 0;
+     left: 0;
+     margin-left: 0!important;
+     z-index: 1;
+     cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    margin-top: 0;
+}
+.checkbox .input-helper:before {
+    top: 0;
+    width: 17px;
+    height: 17px;
+}
+
+
+.checkbox .input-helper:before {
+    left: 0;
+    border: 1px solid #ccc;
+}
+
+.checkbox .input-helper:after {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -webkit-transform: scale(0) rotate(80deg);
+    -ms-transform: scale(0) rotate(80deg);
+    -o-transform: scale(0) rotate(80deg);
+    transform: scale(0) rotate(80deg);
+    width: 22px;
+    height: 9px;
+    border-bottom: 2px solid #009688;
+    border-left: 2px solid #009688;
+    border-bottom-left-radius: 2px;
+    left: -1px;
+    top: 1px;
+}
+.checkbox .input-helper:before, .checkbox .input-helper:after {
+    -webkit-transition: all;
+    -moz-transition: all;
+    -o-transition: all;
+    transition: all;
+    -webkit-transition-duration: 250ms;
+    transition-duration: 250ms;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+    position: absolute;
+    content: "";
+}
+
+.login-content .login-selection .btn-login {
+    top: 50%;
+    margin-top: -25px;
+    right: -25px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28)
+}
+/*END 登录input bottom border*/
+
+
+
+/*main页面*/
+#header {
+    background: #3F51B5;
+    box-shadow: 0 1px 4px rgba(0,0,0,.3);
+    height: 65px;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    left: 0;
+    padding-right: 10px;
+    top: 0;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.header-inner {
+    list-style: none;
+    padding: 15px 0;
+}
+.header-inner>li .logo{
+    max-width: 100%;
+    height: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.header-inner>li {
+    display: inline-block;
+    vertical-align: top;
+}
+.header-inner li .icon{
+    font-size: 24px;
+}
+.header-inner li a {
+    color: #fff;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    display: block;
+    font-size: 16px;
+    font-weight: 100;
+}
+
+
+#main {
+    position: relative;
+}
+/*左侧菜单*/
+#sidebar {
+    position: fixed;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(51,51,51,.38);
+    top: 65px;
+    height: calc(100% - 65px);
+
+    z-index: 5;
+    width: 250px;
+    overflow: hidden;
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+#sidebar .sidebar-inner {
+    height: 100%;
+    overflow-y: auto;
+    width: 300px;
+}
+
+#sidebar .sidebar-inner .si-inner {
+    width: 250px;
+}
+#sidebar .profile-menu:before, #sidebar .profile-menu:after {
+    content: " ";
+    display: table;
+}
+
+#sidebar .profile-menu>a {
+    display: block;
+    height: 129px;
+    margin-bottom: 5px;
+    width: 100%;
+    background: url(../img/profile-menu.png) no-repeat left top;
+    background-size: 100%;
+}
+#sidebar .profile-menu>a .profile-pic {
+    padding: 12px;
+}
+#sidebar .profile-menu>a .profile-pic>img {
+    width: 47px;
+    height: 47px;
+    border-radius: 50%;
+    border: 3px solid rgba(0,0,0,.14);
+    box-sizing: content-box;
+}
+#sidebar .profile-menu>a .profile-info {
+    background: rgba(0,0,0,.37);
+    padding: 7px 14px;
+    color: #fff;
+    margin-top: 20px;
+    position: relative;
+}
+
+#sidebar .main-menu {
+    list-style: none;
+    padding-left: 0;
+    margin: 20px 0 0
+}
+#sidebar .main-menu>li>a {
+    padding: 14px 20px 14px 52px;
+    display: block;
+    color: #4C4C4C;
+    font-weight: 500;
+    position: relative
+}
+#sidebar .main-menu>li>a:hover {
+    color: #262626;
+    background-color: #f7f7f7
+}
+#sidebar .main-menu>li>a>i {
+    position: absolute;
+    left: 16px;
+    font-size: 18px;
+    top: 0;
+    width: 25px;
+    text-align: center;
+    padding: 9px 0;
+    margin-top:5px;
+}
+#sidebar .main-menu>li.sub-menu>a:before,
+#sidebar .main-menu>li.sub-menu>a:after {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    color: #575757;
+    font-family: 'Material Design Iconic Font';
+    font-size: 17px;
+    -webkit-transition: all;
+    -moz-transition: all;
+    -o-transition: all;
+    transition: all;
+    -webkit-transition-duration: 250ms;
+    transition-duration: 250ms;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden
+}
+#sidebar .main-menu>li.sub-menu>a:before {
+    content: "\f0fb";
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1)
+}
+#sidebar .main-menu>li.sub-menu>a:after {
+    content: "\f111";
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0)
+}
+#sidebar .main-menu>li.sub-menu>ul {
+    list-style: none;
+    background: #f7f7f7;
+    display: none;
+    padding: 0
+}
+#sidebar .main-menu>li.sub-menu>ul>li>a {
+    color: #7f7f7f;
+    padding: 8px 20px 8px 50px;
+    font-weight: 500;
+    display: block
+}
+#sidebar .main-menu>li.sub-menu>ul>li>a.active,
+#sidebar .main-menu>li.sub-menu>ul>li>a:hover {
+    color: #000
+}
+#sidebar .main-menu>li.sub-menu>ul>li:first-child>a {
+    padding-top: 14px
+}
+#sidebar .main-menu>li.sub-menu>ul>li:last-child>a {
+    padding-bottom: 16px
+}
+#sidebar .main-menu>li.sub-menu.toggled>a:before {
+    content: "\f0fb";
+    -webkit-transform: scale(0) rotate(-90deg);
+    -ms-transform: scale(0) rotate(-90deg);
+    -o-transform: scale(0) rotate(-90deg);
+    transform: scale(0) rotate(-90deg)
+}
+#sidebar .main-menu>li.sub-menu.toggled>a:after {
+    content: "\f111";
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1)
+}
+#sidebar .main-menu>li.sub-menu.active>ul {
+    display: block
+}
+#sidebar .main-menu>li.active>a {
+    color: #262626;
+    background-color: #F4F4F4
+}
+
+/*主体内容*/
+#content {
+    padding: 30px 0 30px 250px !important;
+}
+
+.block-header {
+    /*margin-top: 20px;*/
+    margin-bottom: 25px;
+    position: relative
+}
+@media screen and (min-width: 768px) {
+    .block-header {
+        padding: 0 22px
+    }
+}
+@media screen and (max-width: 991px) {
+    .block-header {
+        padding: 0 18px
+    }
+}
+.block-header>h2 {
+    font-size: 15px;
+    color: #777;
+    margin: 0;
+    font-weight: 400;
+    text-transform: uppercase
+}
+.block-header>h2>small {
+    display: block;
+    text-transform: none;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    color: #9E9E9E;
+    line-height: 140%
+}
+
+.card {
+    position: relative;
+    background: #fff;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+    margin-bottom: 30px;
+    font-size:10px
+}
+.card .card-header {
+    position: relative
+}
+@media screen and (min-width: 768px) {
+    .card .card-header:not(.ch-alt) {
+        padding: 23px 26px
+    }
+}
+@media screen and (max-width: 991px) {
+    .card .card-header:not(.ch-alt) {
+        padding: 18px
+    }
+}
+.card .card-header h2 {
+    margin: 0;
+    line-height: 100%;
+    font-size: 17px;
+    font-weight: 400
+}
+.card .card-header h2 small {
+    display: block;
+    margin-top: 8px;
+    color: #AEAEAE;
+    line-height: 160%
+}
+@media screen and (min-width: 768px) {
+    .card .card-header.ch-alt {
+        padding: 23px 26px
+    }
+}
+@media screen and (max-width: 991px) {
+    .card .card-header.ch-alt {
+        padding: 18px 18px 28px
+    }
+}
+.card .card-header.ch-alt:not([class*=bgm-]) {
+    background-color: #f7f7f7
+}
+.card .card-header[class*=bgm-] h2,
+.card .card-header[class*=bgm-] h2 small {
+    color: #fff
+}
+.card .card-header .actions {
+    position: absolute;
+    right: 10px;
+    z-index: 2;
+    top: 15px
+}
+.card .card-header .btn-float {
+    right: 25px;
+    bottom: -23px;
+    z-index: 1
+}
+@media screen and (min-width: 768px) {
+    .card .card-body.card-padding {
+        padding: 0px 26px 23px 26px;
+    }
+}
+@media screen and (max-width: 991px) {
+    .card .card-body.card-padding {
+        padding: 18px
+    }
+}
+.card .card-body.card-padding-sm {
+    padding: 15px
+}
+.input-group,
+.card .card-body .input-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    margin-bottom: 10px;
+}
+.card .card-body .input-group .fg-line:after, .w-80 .fg-line:after {
+    left: 85px !important;
+}
+.card .card-body .input-group .fg-line.fg-toggled:after,.w-80 .fg-line.fg-toggled:after {
+    width: calc(100% - 85px) !important;
+}
+.checkbox-group{
+    position: relative;
+    background: #fff;
+}
+
+.checkbox-group .checkbox{
+    float: left;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.btns>button{
+    margin: 0 5px 10px 0;
+    padding: 6px 12px;
+    border-radius: 2px;
+}
+
+
+.btn-os{
+    border-radius: 50% !important;
+    padding: 0 !important;
+    text-align: center;
+    position: relative;
+}
+.btn-os-normal{
+    width: 40px;
+    height: 40px;
+}
+.btn-os-small{
+    width: 25px;
+    height: 25px;
+}
+.btn-os>img{
+    /*width: 40px;*/
+    max-width: 100%;
+}
+
+.card-table{
+    overflow: auto;
+}
+.table {
+    background-color: #fff;
+    margin-bottom: 0
+}
+.table>thead>tr>th {
+    background-color: #fff;
+    vertical-align: middle;
+    font-weight: 500;
+    color: #333;
+    border-width: 1px
+}
+.table [class*=bg-]>tr>th {
+    color: #fff;
+    border-bottom: 0
+}
+.table [class*=bg-]+tbody>tr:first-child>td {
+    border-top: 0
+}
+.table.table-inner {
+    border: 0
+}
+.table>tbody>tr:hover{
+    background: #5bc0de;
+}
+.table>thead>tr>th:first-child,
+.table>tbody>tr>th:first-child,
+.table>tfoot>tr>th:first-child,
+.table>thead>tr>td:first-child,
+.table>tbody>tr>td:first-child,
+.table>tfoot>tr>td:first-child {
+    padding-left: 30px
+}
+.table>thead>tr>th:last-child,
+.table>tbody>tr>th:last-child,
+.table>tfoot>tr>th:last-child,
+.table>thead>tr>td:last-child,
+.table>tbody>tr>td:last-child,
+.table>tfoot>tr>td:last-child {
+    padding-right: 30px
+}
+
+.table>tbody>tr:last-child>td,
+.table>tfoot>tr:last-child>td {
+    padding-bottom: 20px
+}
+.table-bordered {
+    border: 1px solid #f0f0f0;
+}
+td>a{
+    cursor:pointer;
+}
+td>i{
+    /*margin: 0px 10px;*/
+    cursor:pointer;
+    float: right;
+}
+td.edit>i{
+    margin: 0px 10px;
+    font-size: 16px;
+    cursor:pointer;
+    float: none;
+}

@@ -1,0 +1,139 @@
+<div class="container" ng-controller="channelDetailPageController">
+    <div class="block-header">
+        <h2>渠道数据详情</h2>
+    </div>
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+    <div class="card">
+        <div class="card-header">
+            <!--<h2>渠道配置<small>请仔细核对录入数据！以免造成数据计算错误.</small></h2>-->
+        </div>
+        <div class="card-body card-padding">
+           <div class="input-group">
+               <span class="input-group-addon title">游戏选择:</span>
+               <div class="btns">
+                   <button ng-repeat="game in games" ng-model="game" ng-click="switchGame(game)"  class="btn  waves-effect" ng-class="{true:'btn-primary', false:'bgm-gray'}[game.isSelected]">{{game.game_name}}</button>
+               </div>
+           </div>
+            <div class="input-group">
+                <span class="input-group-addon title">平台:</span>
+                <div class="btns">
+                    <button class="btn  btn-icon btn-os btn-os-normal" ng-click="switchOS(1)" ng-class="{true:'btn-info', false:'bgm-gray'}[isSelectIOS]"><img src="img/apple-64.png"></button>
+                    <button class="btn  btn-icon btn-os btn-os-normal" ng-click="switchOS(2)" ng-class="{true:'btn-info', false:'bgm-gray'}[!isSelectIOS]"><img src="img/android-64.png"></button>
+                </div>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon title">分析角度:</span>
+                <div class="btn-group">
+                    <label class="btn btn-primary" ng-model="radioModel" btn-radio="1" uncheckable>渠道</label>
+                    <label class="btn btn-primary" ng-model="radioModel" btn-radio="2" uncheckable>国家</label>
+                    <label class="btn btn-primary" ng-model="radioModel" btn-radio="3" uncheckable>时间</label>
+                </div>
+                <div class="btn-group">
+                    <input ng-click="beginDateOpen($event)" type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="begin_date"
+                           is-open="beginDateOpened"   ng-required="true" close-text="Close"/>
+                </div>
+                <span>至</span>
+                <div class="btn-group">
+                    <input ng-click="endDateOpen($event)" type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="end_date"
+                           is-open="endDateOpened"  ng-required="true" close-text="Close" ng-disabled="readonly"/>
+                </div>
+                <div class="btn-group">
+                    <button ng-click="query()"  class="btn btn-primary waves-effect" >查询</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-header">
+                <h3 class="modal-title">{{media_source}}</h3>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>子渠道</th>
+                        <th>激活数</th>
+                        <th>注册数</th>
+                        <th>创角数</th>
+                        <th>次留数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="row in ModalItems">
+                        <td>{{row.campaign}}</td>
+                        <td>{{row.installs}}</td>
+                        <td>{{row.reg_count}}</td>
+                        <td>{{row.role_count}}</td>
+                        <td>{{row.liucun}}%</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="ok()">OK</button>
+                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            </div>
+        </script>
+
+
+    <div class="card">
+        <div class="card-header">
+            <!--<h2>渠道配置<small>请仔细核对录入数据！以免造成数据计算错误.</small></h2>-->
+        </div>
+        <div class="card-table">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>纬度</th>
+                    <!--<th>点击数</th>-->
+                    <th>激活数</th>
+                    <th>激活成本</th>
+                    <th>花费</th>
+                    <th>注册数</th>
+                    <th>注册率</th>
+                    <th>注册成本</th>
+                    <th>创角数</th>
+                    <th>创角率</th>
+                    <th>创角成本</th>
+                    <!--<th>新创付费数</th>-->
+                    <!--<th>新创付费金额</th>-->
+                    <!--<th>总付费金额</th>-->
+                    <th>次日留存</th>
+                    <th>次留数</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                    <tr ng-repeat="row in tableData">
+                        <!--<td ng-if="row.td_name !='sum'">-->
+                            <!--&lt;!&ndash;<a title="查看子渠道" ng-click="showSonChannel(row)">{{row.td_name}}</a>&ndash;&gt;-->
+                            <!--{{row.td_name}}-->
+                            <!--<i title="录入单价" ng-click="setChannelPrice(row)" class="icon icon-cog"></i>-->
+                        <!--</td>-->
+                        <td ng-if="row.td_name !='sum'">
+                            <a title="查看子渠道" ng-click="showSonChannel(row)">{{row.td_name}}</a>
+                            <i ng-if="radioModel==1 " title="录入单价" ng-click="setChannelPrice(row)" class="icon icon-cog">单</i>
+                        </td>
+                        <td ng-if="row.td_name =='sum'">汇总数据</td>
+                        <!--<td>-</td>-->
+                        <td>{{row.active_count}}</td>
+                        <td>{{row.active_cost}}</td>
+                        <td>{{row.cost}}</td>
+                        <td>{{row.reg_count}}</td>
+                        <td>{{row.reg_rate}}%</td>
+                        <td>{{row.reg_cost}}</td>
+                        <td>{{row.role_count}}</td>
+                        <td>{{row.role_rate}}%</td>
+                        <td>{{row.role_cost}}</td>
+                        <!--<td>{{row.new_pay_count}}</td>-->
+                        <!--<td>{{row.new_pay}}</td>-->
+                        <!--<td>{{row.total_pay}}</td>-->
+                        <td>{{row.liucun}}%</td>
+                        <td>{{row.liucun_count}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

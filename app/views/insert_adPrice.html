@@ -1,0 +1,146 @@
+<div class="container" ng-controller="InsertAdPriceController">
+    <div class="block-header">
+        <h2>投放单价</h2>
+    </div>
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+    <div class="col-md-12">
+        <div class="input-group">
+            <span class="input-group-addon title">游戏：</span>
+            <input type="text" class="form-control" ng-model="choseChannelInfo.app_name" placeholder="游戏名称" value="{{choseChannelInfo.app_name}}" readonly>
+            <span class="input-group-addon title">渠道：</span>
+            <input type="text" class="form-control" ng-model="choseChannelInfo.media_source" placeholder="渠道名称" value="{{choseChannelInfo.media_source}}" readonly>
+            <span class="input-group-addon title">平台：</span>
+            <div class="btns">
+                <button class="btn btn-info btn-icon btn-os btn-os-normal" ng-if="choseChannelInfo.os == 1"><img src="img/apple-64.png"></button>
+                <button class="btn btn-info btn-icon btn-os btn-os-normal" ng-if="choseChannelInfo.os == 2"><img src="img/android-64.png"></button>
+                <button class="btn bgm-teal waves-effect" ng-click="openAddCFCModal('sm')">添加固定花费</button>
+                <button class="btn bgm-teal waves-effect" ng-click="openAddCFPModal('sm')">添加固定价格</button>
+                <button class="btn bgm-teal waves-effect" ng-click="openAddCFCPModal('lg')">添加固定国家价格</button>
+            </div>
+            <!--<span class="input-group-addon title">备注名：</span>-->
+            <!--<input type="text" class="form-control" placeholder="备注名">-->
+        </div>
+    </div>
+
+
+
+
+    <!--<div class="col-md-4">-->
+        <!--<div class="card">-->
+            <!--<div class="card-header">-->
+                <!--<h2>添加固定花费<small></small></h2>-->
+            <!--</div>-->
+            <!--<div class="card-body card-padding">-->
+                <!--<div class="input-group">-->
+                    <!--<span class="input-group-addon title">日期：</span>-->
+                    <!--<div class="fg-line">-->
+                        <!--<input ng-click="open($event)" type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="dt1"-->
+                               <!--is-open="opened"  max-date="'2016-06-22'" ng-required="true" close-text="Close" />-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="input-group">-->
+                    <!--<span class="input-group-addon title">花费：</span>-->
+                    <!--<div class="fg-line">-->
+                        <!--<input type="text" class="form-control" placeholder="花费">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="input-group">-->
+                    <!--<span class="input-group-addon title">单价：</span>-->
+                    <!--<div class="fg-line">-->
+                        <!--<input type="text" class="form-control" placeholder="单价">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="input-group">-->
+                    <!--<span class="input-group-addon title">封顶：</span>-->
+                    <!--<div class="fg-line">-->
+                        <!--<input type="text" class="form-control" placeholder="封顶(可以为空)">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<button class="btn bgm-teal waves-effect" style="margin-left: 20px">添加</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h2>{{choseChannelInfo.app_name}} - {{choseChannelInfo.media_source}} - <span ng-if="choseChannelInfo.os == 1">IOS</span> <span ng-if="choseChannelInfo.os == 2">Android</span> 定价<small></small></h2>
+            </div>
+            <div class="card-table" style="OVERFLOW: auto;">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>定价方式</th>
+                        <th>定价数(美金)</th>
+                        <th>封顶花费(美金)</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in tableData">
+                        <td>{{row.begin_date}} ~ {{row.end_date}}</td>
+                        <td data-type-id="{{row.type_id}}">{{row.type}}</td>
+                        <td>{{row.price}}</td>
+                        <td ng-if="row.upper_limit">{{row.upper_limit}}</td>
+                        <td ng-if="!row.upper_limit && row.type_id ==1">--</td>
+                        <td ng-if="!row.upper_limit && row.type_id !=1">无上限</td>
+                        <td class="edit"><i ng-click="openUpdateModal('sm',row)" class="icon icon-edit" ></i> <i ng-click="openDeleteModal('sm',row)" class="icon icon-trash"></i></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="channelPriceModal.html">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title text-align-center fw-bold mt" >{{title}}</h4>
+        </div>
+        <div class="modal-body bg-gray-lighter" ng-model="modalData">
+            <div class="input-group  w-80 col-md-12">
+                <span class="input-group-addon title">开始日期：</span>
+                <div class="fg-line">
+                    <input ng-click="beginDateOpen($event)" type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="modalData.begin_date" value="{{ modalData.begin_date| date:'yyyy-MM-dd'}}"
+                           is-open="beginDateOpened"  max-date="'2016-06-22'" ng-required="true" close-text="Close" ng-disabled="readonly"/>
+                </div>
+            </div>
+            <div class="input-group  w-80 col-md-12">
+                <span class="input-group-addon title">结束日期：</span>
+                <div class="fg-line">
+                    <input ng-click="endDateOpen($event)" type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="modalData.end_date" value="{{ modalData.end_date| date:'yyyy-MM-dd'}}"
+                           is-open="endDateOpened"  max-date="'2016-06-22'" ng-required="true" close-text="Close" ng-disabled="readonly"/>
+                </div>
+            </div>
+            <div class="input-group  w-80 col-md-12" ng-if="insertDataType !='cfcp'">
+                <span class="input-group-addon title">{{typeTitle}}：</span>
+                <div class="fg-line">
+                    <input class="form-control"  ng-minlength=1  placeholder="请输入固定花费" ng-model="modalData.price" value="{{modalData.price}}" required ng-disabled="readonly">
+                </div>
+            </div>
+            <div class="input-group col-md-12" ng-if="insertDataType =='cfcp'" ng-model="modalData.countrys">
+                 <div class="input-group  w-80 col-md-4" ng-repeat="country in countrys" ng-model="modalData.countrys.country" style="float: left;">
+                <span class="input-group-addon title">{{country.name}} :</span>
+                <div class="fg-line">
+                    <input class="form-control"  ng-minlength=1  placeholder="请输入价格" ng-model="country.price" value="{{country.price}}" required ng-disabled="readonly">
+                </div>
+                     </div>
+            </div>
+
+            <div class="input-group  w-80 col-md-12" ng-if="insertDataType !='cfc'">
+                <span class="input-group-addon title">封顶花费：</span>
+                <div class="fg-line">
+                    <input  class="form-control" placeholder="封顶花费" ng-model="modalData.upper_limit" value="{{modalData.upper_limit}}" ng-disabled="readonly">
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-gray" data-ng-click="cancel()">取消</button>
+            <button type="button" class="btn btn-success" data-ng-click="ok()">{{Operation}}</button>
+        </div>
+    </script>
+
+
+</div>

@@ -1,0 +1,138 @@
+<div class="container" ng-controller="InsertAdPriceController">
+    <div class="block-header">
+        <h2>投放单价</h2>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h2>渠道配置<small>请仔细核对录入数据！</small></h2>
+            </div>
+            <div class="card-body card-padding" ng-model="choseChannelInfo">
+                <div class="input-group">
+                    <span class="input-group-addon title">渠&nbsp;&nbsp;&nbsp;&nbsp;道：</span>
+                    <div class="fg-line">
+                        <input type="text" class="form-control" ng-model="choseChannelInfo.media_source" placeholder="渠道名称" value="{{choseChannelInfo.media_source}}" readonly>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon title">备注名：</span>
+                    <div class="fg-line">
+                        <input type="text" class="form-control" placeholder="备注名">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon title">游&nbsp;&nbsp;&nbsp;&nbsp;戏：</span>
+                    <div class="fg-line">
+                        <input type="text" class="form-control" ng-model="choseChannelInfo.app_name" placeholder="游戏名称" value="{{choseChannelInfo.app_name}}" readonly>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon title">平&nbsp;&nbsp;&nbsp;&nbsp;台：</span>
+                    <div class="btns">
+                        <button class="btn btn-info btn-icon btn-os btn-os-normal" ng-if="choseChannelInfo.os == 1"><img src="img/apple-64.png"></button>
+                        <button class="btn btn-info btn-icon btn-os btn-os-normal" ng-if="choseChannelInfo.os == 2"><img src="img/android-64.png"></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header">
+                <h2>添加固定花费<small></small></h2>
+            </div>
+            <div class="card-body card-padding" style="OVERFLOW: auto;">
+                <div class="input-group">
+                    <span class="input-group-addon title">日期：</span>
+                    <div class="fg-line">
+                        <input ng-click="open($event)" type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="dt1"
+                               is-open="opened"  max-date="'2016-06-22'" ng-required="true" close-text="Close" />
+                    </div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon title">花费：</span>
+                    <div class="fg-line">
+                        <input type="text" class="form-control" placeholder="花费">
+                    </div>
+                </div>
+                <button class="btn bgm-teal waves-effect" style="margin-left: 20px">添加</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h2>添加固定单价<small></small></h2>
+            </div>
+            <div class="card-body card-padding" style="OVERFLOW: auto;">
+
+                <div class="input-group">
+                    <span class="input-group-addon title">时间：</span>
+                    <div class="fg-line">
+                        <input ng-click="open($event)" type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="dt2"
+                               is-open="opened"  max-date="'2016-06-22'" ng-required="true" close-text="Close" />
+                    </div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon title">单价：</span>
+                    <div class="fg-line">
+                        <input type="text" class="form-control" placeholder="单价">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon title">封顶：</span>
+                    <div class="fg-line">
+                        <input type="text" class="form-control" placeholder="封顶">
+                    </div>
+                </div>
+                <button class="btn bgm-teal waves-effect" style="margin-left: 20px">添加</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h2>添加固定国家单价<small></small></h2>
+            </div>
+            <div class="card-body card-padding" style="OVERFLOW: auto;">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>定价方式</th>
+                        <th>定价数(美金)</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h2>攻城掠地-FB-Android 定价<small></small></h2>
+            </div>
+            <div class="card-table" style="OVERFLOW: auto;">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>定价方式</th>
+                        <th>定价数(美金)</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

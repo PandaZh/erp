@@ -1,0 +1,143 @@
+﻿<div class="row" ng-controller="channelPriceController">
+    <div class="col-sm-12 col-md-12">
+        <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Chose app: </label>
+            <div class="col-sm-6">
+                <ui-select ng-model="app.selected" theme="bootstrap">
+                    <ui-select-match placeholder="Select">
+                        {{$select.selected.name}}&nbsp;&nbsp;
+                        <i ng-class="{true:'fa fa-apple',false:'fa fa-android'}[$select.selected.os == 1]"></i>
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in AppAsync | filter: $select.search">
+                        <span>{{item.name}}&nbsp;&nbsp;<i ng-class="{true:'fa fa-apple',false:'fa fa-android'}[item.os == 1]"></i></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-12 m-t-20">
+        <div class="widget flat radius-bordered">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">选择Media source</span>
+            </div>
+            <div class="widget-body bordered-bottom bordered-darkorange">
+                <div class="row control-group">
+                    <div class="radio col-md-3" ng-repeat="item in mediaSources">
+                        <label>
+                            <input ng-click="getPriceDetail(item)" name="form-field-radio" type="radio">
+                            <span class="text" >{{item.name}}<small ng-class="{true:'danger', false:'success'}[item.nowDayDiff >=0] ">(最后日期:{{item.maxEndDate}}) </small></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-12 m-t-20" ng-if="showPriceList">
+        <a class="btn btn-default yellow" href="javascript:void(0);" ng-click="getPriceDetail()"><i class="fa fa-refresh"></i>刷新</a>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Media souce</th>
+                    <th>时间范围</th>
+                    <th>定价方式</th>
+                    <th>价格</th>
+                    <th>封顶花费</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in priceList">
+                    <td>{{mediaSource.selected.name}}</td>
+                    <td>{{item.beginDate}}~{{item.endDate}}</td>
+                    <td>{{item.type}}</td>
+                    <td>{{item.price| currency}}</td>
+                    <td>{{item.upperLimit?item.upperLimit:'无上限'}}</td>
+                    <td><a ng-click="deletePrice(item)"><i class="fa fa-trash"></i></a></td>
+                </tr>
+                <tr ng-if="noPriceData">
+                    <td class="danger"  colspan="6">{{mediaSource.selected.name}} 无价格设置数据</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-sm-6 col-md-6 m-t-20" ng-if="showAddFrom" style="min-height: 400px">
+        <tabset>
+            <tab heading="增加固定花费">
+                <form role="form">
+                    <div class="form-group">
+                        <div class=" input-group">
+                            <span class="input-group-addon">日期范围</span>
+                            <input date-range-picker class="form-control date-picker" type="text" ng-model="formData.date" />
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{true:'has-error'}[isOKFC]">
+                        <div class="input-group">
+                            <span class="input-group-addon">固定花费</span>
+                            <input type="number" class="form-control" placeholder="请输入花费"  ng-model="formData.fixedCost"   required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <a  class="btn btn-default purple"  href="javascript:void(0);" ng-click="addFixedCost()"><i class="fa fa-plus"></i> Add</a>
+                    </div>
+                </form>
+            </tab>
+            <tab heading="增加固定单价">
+                <form role="form">
+                    <div class="form-group">
+                        <div class=" input-group">
+                            <span class="input-group-addon">日期范围</span>
+                            <input date-range-picker class="form-control date-picker" type="text" ng-model="formData.date" />
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{true:'has-error'}[isOKFP]">
+                        <div class="input-group">
+                            <span class="input-group-addon">固定单价</span>
+                            <input type="number" class="form-control" placeholder="请输入花费" ng-model="formData.fixedPrice" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">封顶花费</span>
+                            <input type="number" class="form-control" placeholder="请输入花费上限" ng-model="formData.fixedPriceUpperLimit" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <a class="btn btn-default purple" href="javascript:void(0);" ng-click="addFixedPrice()"><i class="fa fa-plus"></i> Add</a>
+                    </div>
+                </form>
+            </tab>
+            <tab heading="增加固定国家单价">
+                <form role="form">
+                    <div class="form-group">
+                        <div class=" input-group">
+                            <span class="input-group-addon">日期范围</span>
+                            <input date-range-picker class="form-control date-picker" type="text" ng-model="formData.date" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="overflow: hidden;">
+                            <div class="input-group col-md-4 pull-left" ng-model="countrys" ng-repeat="country in countrys">
+                                <span class="input-group-addon" ng-model="countrys.country">{{country.name}}</span>
+                                <input type="number" class="form-control" placeholder="单价" ng-model="country.price" value="{{country.price}}">
+                            </div>
+                    </div>
+                    <div class="form-group">
+                        <div class=" input-group">
+                            <span class="input-group-addon">封顶花费</span>
+                            <input type="text" class="form-control" ng-model="formData.fixedCountryPriceUpperLimit" placeholder="封顶花费" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <a class="btn btn-default purple" href="javascript:void(0);" ng-click="addFixedCountryPrice()"><i class="fa fa-plus"></i> Add</a>
+                    </div>
+                </form>
+            </tab>
+        </tabset>
+    </div>
+</div>
+<!--TODO lazyload 会报错-->
+<script src="lib/modules/angular-daterangepicker/moment.js"></script>
+<script src="lib/modules/angular-daterangepicker/daterangepicker.js"></script>
+<script src="lib/modules/angular-daterangepicker/angular-daterangepicker.js"></script>
